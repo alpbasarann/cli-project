@@ -16,3 +16,7 @@ class PermanentProviderError(ProviderError):
 
 class MaxStepsExceeded(AgentError):
     pass
+
+
+class SandboxViolation(AgentError):
+    pass

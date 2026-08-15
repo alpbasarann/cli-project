@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from agent.errors import MaxStepsExceeded
 from agent.llm.base import LLMProvider
 from agent.protocol import Message, Usage, UserMessage
-from agent.tools import ToolRegistry, dispatch
+from agent.tools.dispatcher import Dispatcher
 
 
 @dataclass
@@ -16,13 +16,13 @@ class RunResult:
 
 def run(
     provider: LLMProvider,
-    registry: ToolRegistry,
+    dispatcher: Dispatcher,
     user_input: str,
     system: str | None = None,
-    max_steps: int = 10,
+    max_steps: int = 20,
 ) -> RunResult:
     history: list[Message] = [UserMessage.from_text(user_input)]
-    schemas = registry.schemas()
+    schemas = dispatcher.schemas()
     total = Usage()
 
     for step in range(1, max_steps + 1):
@@ -35,7 +35,7 @@ def run(
         if not response.wants_tools:
             return RunResult(response.text, history, step, total)
 
-        results = [dispatch(block, registry) for block in response.tool_uses]
+        results = [dispatcher.dispatch(block) for block in response.tool_uses]
         history.append(UserMessage.from_tool_results(results))
 
     raise MaxStepsExceeded(f"Did not finish within {max_steps} steps")
