@@ -14,6 +14,10 @@ class PermanentProviderError(ProviderError):
     pass
 
 
+class ConfigError(AgentError):
+    pass
+
+
 class MaxStepsExceeded(AgentError):
     pass
 

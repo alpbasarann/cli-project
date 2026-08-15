@@ -2,8 +2,8 @@ import time
 
 import anthropic
 
+from agent.config.schema import ProviderSettings
 from agent.errors import PermanentProviderError, TransientProviderError
-from agent.llm.config import ProviderConfig
 from agent.protocol import (
     AssistantMessage,
     ContentBlock,
@@ -23,7 +23,7 @@ _STOP_REASONS: dict[str, StopReason] = {
 
 
 class AnthropicProvider:
-    def __init__(self, config: ProviderConfig, client: anthropic.Anthropic | None = None) -> None:
+    def __init__(self, config: ProviderSettings, client: anthropic.Anthropic | None = None) -> None:
         self._config = config
         self._client = client or anthropic.Anthropic(timeout=config.timeout_seconds)
 

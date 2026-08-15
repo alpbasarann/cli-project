@@ -1,0 +1,10 @@
+services:
+  agent:
+    build: .
+    env_file: .env
+    volumes:
+      - ./workspace:/workspace
+      - ./traces:/workspace/traces
+      - ./sessions:/workspace/sessions
+    stdin_open: true
+    tty: true

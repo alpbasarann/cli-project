@@ -1,9 +1,12 @@
+import time
 from typing import Callable
 
 from pydantic import ValidationError
 
 from agent.errors import SandboxViolation
 from agent.protocol import ToolResultBlock, ToolUseBlock
+from agent.telemetry.events import ToolExecuted
+from agent.telemetry.tracer import NullTracer, Tracer
 from agent.tools.base import ToolContext
 from agent.tools.registry import ToolRegistry
 
@@ -20,15 +23,31 @@ class Dispatcher:
         registry: ToolRegistry,
         context: ToolContext,
         approve: ApprovalFn = always_approve,
+        tracer: Tracer | None = None,
     ) -> None:
         self._registry = registry
         self._context = context
         self._approve = approve
+        self._tracer = tracer or NullTracer()
 
     def schemas(self) -> list[dict]:
         return self._registry.schemas()
 
     def dispatch(self, block: ToolUseBlock) -> ToolResultBlock:
+        started = time.perf_counter()
+        result = self._execute(block)
+        duration_ms = (time.perf_counter() - started) * 1000
+
+        self._tracer.emit(
+            ToolExecuted(
+                tool_name=block.name,
+                is_error=result.is_error,
+                duration_ms=duration_ms,
+            )
+        )
+        return result
+
+    def _execute(self, block: ToolUseBlock) -> ToolResultBlock:
         def failure(message: str) -> ToolResultBlock:
             return ToolResultBlock(tool_use_id=block.id, content=message, is_error=True)
 
