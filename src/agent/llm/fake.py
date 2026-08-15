@@ -7,7 +7,12 @@ class FakeLLMProvider:
         self._queue = list(scripted)
         self.calls: list[list[Message]] = []
 
-    def send(self, messages: list[Message], tools: list[dict]) -> AssistantMessage:
+    def send(
+        self,
+        messages: list[Message],
+        tools: list[dict],
+        system: str | None = None,
+    ) -> AssistantMessage:
         self.calls.append(deepcopy(messages))
         if not self._queue:
             raise RuntimeError("Loop requested more responses than were scripted")

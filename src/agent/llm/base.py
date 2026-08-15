@@ -8,4 +8,5 @@ class LLMProvider(Protocol):
         self,
         messages: list[Message],
         tools: list[dict],
+        system: str | None = None,
     ) -> AssistantMessage: ...

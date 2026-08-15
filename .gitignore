@@ -38,3 +38,8 @@ htmlcov/
 # Runtime artifacts
 *.log
 traces/
+
+# Playground
+sandbox/
+workspace/
+sessions/
