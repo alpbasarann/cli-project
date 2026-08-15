@@ -5,7 +5,7 @@ load_dotenv()
 import json
 from pathlib import Path
 
-from agent.llm.config import ProviderConfig
+from agent.config.schema import ProviderSettings
 from agent.errors import AgentError
 from agent.llm.registry import create_provider
 from agent.loop import run
@@ -34,7 +34,7 @@ def main() -> None:
     workdir = Path("./workspace").resolve()
     workdir.mkdir(exist_ok=True)
 
-    provider = create_provider(ProviderConfig())
+    provider = create_provider(ProviderSettings())
     dispatcher = Dispatcher(
         registry=ToolRegistry([ReadFileTool(), WriteFileTool(), EditFileTool()]),
         context=ToolContext(sandbox=Sandbox(workdir)),

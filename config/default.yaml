@@ -1,0 +1,25 @@
+provider:
+  name: anthropic
+  model: claude-sonnet-4-5
+  max_tokens: 4096
+  temperature: 1.0
+  max_retries: 3
+  timeout_seconds: 120.0
+
+agent:
+  workdir: workspace
+  max_steps: 20
+  system_prompt: >-
+    You are a CLI coding agent working inside a sandboxed directory.
+    Read files before editing them, and make the smallest change that solves the task.
+
+context:
+  max_tokens: 60000
+  keep_recent: 6
+
+tools:
+  auto_approve: false
+
+telemetry:
+  enabled: true
+  trace_dir: traces

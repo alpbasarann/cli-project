@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 from agent.errors import AgentError
-from agent.llm.config import ProviderConfig
+from agent.config.schema import ProviderSettings
 from agent.llm.registry import create_provider
 from agent.loop import run
 from agent.sandbox import Sandbox
@@ -40,7 +40,7 @@ def main() -> None:
 
     try:
         result = run(
-            provider=create_provider(ProviderConfig()),
+            provider=create_provider(ProviderSettings()),
             dispatcher=dispatcher,
             user_input=(
                 "Create calc.py containing an add function that mistakenly subtracts, "
