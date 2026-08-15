@@ -39,5 +39,7 @@ htmlcov/
 *.log
 traces/
 
-# Sandbox playground
+# Playground
 sandbox/
+workspace/
+sessions/
