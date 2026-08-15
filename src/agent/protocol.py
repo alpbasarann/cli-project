@@ -25,6 +25,14 @@ ContentBlock = Annotated[
     Field(discriminator="type"),
 ]
 
+class Usage(BaseModel):
+    input_tokens: int = 0
+    output_tokens: int = 0
+
+    @property
+    def total(self) -> int:
+        return self.input_tokens + self.output_tokens
+
 StopReason = Literal["end_turn", "tool_use", "max_tokens"]
 
 class BaseMessage(BaseModel):
@@ -55,6 +63,7 @@ class UserMessage(BaseMessage):
 class AssistantMessage(BaseMessage):
     role: Literal["assistant"] = "assistant"
     stop_reason: StopReason = "end_turn"
+    usage: Usage = Field(default_factory=Usage)
 
     @classmethod
     def from_text(cls, text: str, stop_reason: StopReason = "end_turn") -> Self:
