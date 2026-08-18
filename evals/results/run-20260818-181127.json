@@ -1,0 +1,57 @@
+{
+  "label": "run",
+  "model": "claude-sonnet-4-5",
+  "repeat": 3,
+  "pass_rate": 1.0,
+  "tasks": [
+    {
+      "name": "create_file",
+      "passes": 3,
+      "attempts": 3,
+      "mean_steps": 2.0,
+      "mean_tokens": 2358.6666666666665,
+      "mean_duration_seconds": 7.083947666666063
+    }
+  ],
+  "attempts": [
+    {
+      "task": "create_file",
+      "passed": true,
+      "reason": "passed",
+      "steps": 2,
+      "tokens": 2358,
+      "duration_seconds": 3.5635431249975227,
+      "tool_calls": [
+        "write_file"
+      ],
+      "tool_errors": 0,
+      "error": null
+    },
+    {
+      "task": "create_file",
+      "passed": true,
+      "reason": "passed",
+      "steps": 2,
+      "tokens": 2360,
+      "duration_seconds": 14.177951833000407,
+      "tool_calls": [
+        "write_file"
+      ],
+      "tool_errors": 0,
+      "error": null
+    },
+    {
+      "task": "create_file",
+      "passed": true,
+      "reason": "passed",
+      "steps": 2,
+      "tokens": 2358,
+      "duration_seconds": 3.5103480420002597,
+      "tool_calls": [
+        "write_file"
+      ],
+      "tool_errors": 0,
+      "error": null
+    }
+  ]
+}

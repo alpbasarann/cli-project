@@ -1,0 +1,3 @@
+name: multi_file_edit
+prompt: Rename the function greet to salute in greeter.py and update both call sites in morning.py and evening.py. The old name greet must not remain in any of those files.
+max_steps: 8
