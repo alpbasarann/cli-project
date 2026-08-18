@@ -18,9 +18,13 @@ dependencies = [
 
 [project.scripts]
 agent = "agent.cli.app:app"
+agent-eval = "evals.runner:app"
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/agent"]
+packages = ["src/agent", "evals"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
